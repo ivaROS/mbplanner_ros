@@ -18,8 +18,19 @@ cs_add_library(${PROJECT_NAME}
   src/visualizer.cpp
   src/random_sampler.cpp
   src/map_manager_octomap_impl.cpp
+  # src/map_manager_voxblox_impl.cpp
+)
+
+cs_add_library(${PROJECT_NAME}2
   src/map_manager_voxblox_impl.cpp
 )
+
+cs_add_library(${PROJECT_NAME}3
+  src/map_manager_voxblox_impl_debug.cpp
+)
+
+target_compile_options(${PROJECT_NAME}3 PRIVATE -O0 -g)
+
 
 cs_install()
 cs_export(LIBRARIES)

@@ -268,27 +268,27 @@ void MapManagerVoxblox<voxblox::EsdfServer, voxblox::EsdfVoxel>::clearIfUnknown(
   }
 }
 
-template <typename SDFServerType, typename SDFVoxelType>
-bool MapManagerVoxblox<SDFServerType, SDFVoxelType>::augmentFreeBox(
-    const Eigen::Vector3d& position, const Eigen::Vector3d& box_size) {
-  voxblox::HierarchicalIndexMap block_voxel_list;
-  voxblox::utils::getAndAllocateBoxAroundPoint(position.cast<voxblox::FloatingPoint>(),
-                                               box_size, sdf_layer_, &block_voxel_list);
-  for (const std::pair<voxblox::BlockIndex, voxblox::VoxelIndexList>& kv : block_voxel_list) {
-    // Get block.
-    typename voxblox::Block<SDFVoxelType>::Ptr block_ptr =
-        sdf_layer_->getBlockPtrByIndex(kv.first);
+// template <typename SDFServerType, typename SDFVoxelType>
+// bool MapManagerVoxblox<SDFServerType, SDFVoxelType>::augmentFreeBox(
+//     const Eigen::Vector3d& position, const Eigen::Vector3d& box_size) {
+//   voxblox::HierarchicalIndexMap block_voxel_list;
+//   voxblox::utils::getAndAllocateBoxAroundPoint(position.cast<voxblox::FloatingPoint>(),
+//                                                box_size, sdf_layer_, &block_voxel_list);
+//   for (const std::pair<voxblox::BlockIndex, voxblox::VoxelIndexList>& kv : block_voxel_list) {
+//     // Get block.
+//     typename voxblox::Block<SDFVoxelType>::Ptr block_ptr =
+//         sdf_layer_->getBlockPtrByIndex(kv.first);
 
-    for (const voxblox::VoxelIndex& voxel_index : kv.second) {
-      if (!block_ptr->isValidVoxelIndex(voxel_index)) {
-        continue;
-      }
-      SDFVoxelType& voxel = block_ptr->getVoxelByVoxelIndex(voxel_index);
-      // Clear voxels that haven't been cleared yet
-      clearIfUnknown(voxel);
-    }
-  }
-}
+//     for (const voxblox::VoxelIndex& voxel_index : kv.second) {
+//       if (!block_ptr->isValidVoxelIndex(voxel_index)) {
+//         continue;
+//       }
+//       SDFVoxelType& voxel = block_ptr->getVoxelByVoxelIndex(voxel_index);
+//       // Clear voxels that haven't been cleared yet
+//       clearIfUnknown(voxel);
+//     }
+//   }
+// }
 
 // [NEED TO REVIEW]
 template <typename SDFServerType, typename SDFVoxelType>
